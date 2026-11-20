@@ -5,9 +5,13 @@ public final class InventoryDemo {
     }
 
     public static void main(String[] arguments) {
+        String weaponCode = "sword";
+        String weaponName = "Sword";
+        String potionCode = "healing";
+        String potionName = "Potion";
         int initialQuantity = 1;
-        Item weapon = new Weapon("sword", "Sword", initialQuantity);
-        Item potion = new Potion("healing", "Potion", initialQuantity);
+        Item weapon = new Weapon(weaponCode, weaponName, initialQuantity);
+        Item potion = new Potion(potionCode, potionName, initialQuantity);
         Inventory inventory = new Inventory();
 
         inventory.add(weapon);

@@ -13,6 +13,7 @@ public final class Potion extends Item {
             return "Empty: " + getName();
         }
 
+        setQuantity(getQuantity() - 1);
         return "Drink: " + getName();
     }
 }

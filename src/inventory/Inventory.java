@@ -1,52 +1,51 @@
 package inventory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public final class Inventory {
-    private final List<Item> items = new ArrayList<>();
+    private final Map<String, Item> items = new LinkedHashMap<>();
 
     public int getSize() {
         return items.size();
     }
 
     public boolean add(Item item) {
-        if (item == null) {
+        if (item == null || items.containsKey(item.getCode())) {
             return false;
         }
 
-        return items.add(item);
+        items.put(item.getCode(), item);
+        return true;
     }
 
     public Optional<Item> findByCode(String code) {
-        for (Item item : items) {
-            if (item.getCode() == code) {
-                return Optional.of(item);
-            }
+        if (code == null) {
+            return Optional.empty();
         }
 
-        return null;
+        return Optional.ofNullable(items.get(code));
     }
 
     public boolean removeByCode(String code) {
-        return items.removeIf(item -> item.getCode().equals(code));
+        if (code == null) {
+            return false;
+        }
+
+        return items.remove(code) != null;
     }
 
     public List<String> listCodes() {
-        List<String> codes = new ArrayList<>();
-
-        for (Item item : items) {
-            codes.add(item.getCode());
-        }
-
-        return codes;
+        return List.copyOf(items.keySet());
     }
 
     public List<String> useAll() {
         List<String> messages = new ArrayList<>();
 
-        for (Item item : items) {
+        for (Item item : items.values()) {
             messages.add(item.use());
         }
 
